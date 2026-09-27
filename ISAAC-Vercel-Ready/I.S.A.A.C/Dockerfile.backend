@@ -1,0 +1,54 @@
+# ==========================================
+# ISAAC Backend - Production Dockerfile
+# ==========================================
+
+FROM python:3.11-slim as base
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    APP_ENV=production \
+    PORT=8000
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies & curl for healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy backend requirements
+COPY backend/requirements.txt /app/backend/requirements.txt
+
+# Install python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r /app/backend/requirements.txt
+
+# Copy backend application source
+COPY backend /app/backend
+
+# Copy ML trained models & preprocessors needed for inference
+COPY ml /app/ml
+
+# Copy scripts & sample data if present
+COPY scripts /app/scripts
+COPY data /app/data
+
+# Create non-root system user for security
+RUN useradd -m -u 10001 -s /bin/bash isaacuser && \
+    chown -R isaacuser:isaacuser /app
+
+USER isaacuser
+
+# Expose backend HTTP / WebSocket port
+EXPOSE 8000
+
+# Health check definition against liveness probe
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:8000/health/live || exit 1
+
+# Production startup with Uvicorn
+CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

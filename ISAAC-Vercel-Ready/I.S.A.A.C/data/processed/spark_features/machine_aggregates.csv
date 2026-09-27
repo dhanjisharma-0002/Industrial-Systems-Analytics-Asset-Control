@@ -1,0 +1,4 @@
+machine_type,total_records,total_failures,failure_rate_pct,twf_count,hdf_count,pwf_count,osf_count,rnf_count,avg_air_temp_k,min_air_temp_k,max_air_temp_k,std_air_temp_k,avg_process_temp_k,min_process_temp_k,max_process_temp_k,std_process_temp_k,avg_temp_diff_k,avg_rpm,min_rpm,max_rpm,std_rpm,avg_torque_nm,min_torque_nm,max_torque_nm,std_torque_nm,avg_power_w,min_power_w,max_power_w,std_power_w,avg_tool_wear_min,max_tool_wear_min,std_tool_wear_min
+H,1003,21,2.09,7,8,5,2,4,299.87,295.5,304.2,2.02,309.93,305.9,313.5,1.49,10.06,1538.1,1212.0,2636.0,173.1,39.84,12.8,72.8,9.64,6263.6,3435.5,10093.6,1036.5,107.4,246,63.1
+L,6000,235,3.92,25,76,59,87,13,300.02,295.3,304.5,1.99,310.01,305.7,313.8,1.48,10.0,1539.5,1181.0,2886.0,180.4,40.0,3.8,76.6,10.01,6282.8,1148.4,10469.9,1073.8,108.4,251,64.1
+M,2997,83,2.77,14,31,31,9,2,300.03,295.3,304.4,2.02,310.02,305.7,313.8,1.5,9.99,1537.6,1168.0,2710.0,179.1,40.02,9.7,76.2,9.99,6279.1,2751.8,10233.2,1065.0,107.3,253,63.0
